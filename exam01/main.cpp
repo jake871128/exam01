@@ -2,11 +2,12 @@
 //#include "uLCD_4DGL.h"
 //uLCD_4DGL uLCD(D1, D0, D2);
 
-PwmOut PWM1(D6);
-AnalogIn Ain(A0);
+uLCD_4DGL uLCD(D1, D0, D2);
 AnalogOut Aout(DAC0_OUT);
+PwmOut PWM1(D6);
 Serial pc( USBTX, USBRX );
-float ADCdata[128];
+DigitalOut D(D0);
+float data[128];
 
 int main(){
      /*Q1
@@ -18,21 +19,17 @@ int main(){
       wait(30);
     */
  
-    PWM1.period(0.001);
-    PWM1 = 0.1;
-    int sample =128;
-    while(1){
-      for (int i = 0; i < sample; i++){
-              Aout = Ain;
-              ADCdata[i] = Ain;
-              wait(1./sample);
-          }
-
-          for (int i = 0; i < sample; i++){
-              pc.printf("%1.3f\r\n", ADCdata[i]);
-              wait(0.1);
-          }
-      
+     for(float i=0; i<1;i+=0.1){       
+        PWM1 = i;
+        p=PWM1;
+        wait(0.1);
+        pc.printf("%1.3f\r\n",p);  
     }
-
-}
+ for(float i=1; i<0;i-=0.1){   
+        PWM1 = i;
+        p=PWM1;
+        wait(0.1);
+        pc.printf("%1.3f\r\n",p);  
+    }
+  
+    }
